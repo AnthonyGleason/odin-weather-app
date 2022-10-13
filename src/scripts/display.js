@@ -1,4 +1,4 @@
-let Display = function (){
+let Display = function(){
 
 };
 
