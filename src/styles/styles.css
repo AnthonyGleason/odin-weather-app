@@ -7,18 +7,35 @@
 body{
     height: 100vh;
     width: 100vw;
-    background-image: url(../assets/wood.svg);
-    background-size:contain;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: palegoldenrod;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 2fr;
+    grid-template-areas:
+    "img form"
+    "data form";
 }
-.weather{
+.search-form,
+.weather-data,
+.weather-img{
+    padding: 20px;
+}
+
+.search-form{
+    grid-area: form;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    background-size: cover;
-    border-radius: 15px;
-    height: 500px;
-    width: 500px;
+    gap: 20px;
+    margin-right: 100%;
+}
+.weather-data{
+    grid-area: data;
+    padding: 50px;
+}
+.weather-img{
+    width: 100%;
+    grid-area: img;
+    border-radius: 50px;
 }

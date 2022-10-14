@@ -1,13 +1,14 @@
 import rainImg from "../assets/rain.jpg";
 import cloudsImg from "../assets/clouds.jpg";
 import sunnyImg from "../assets/sunny.jpg";
+import hazeImg from "../assets/haze.jpg";
 
 let Display = function(){
     this.searchButton = document.querySelector('.search-button');
     this.toggleTempButton = document.querySelector('.toggle-temp-button');
     this.tempUnitType = "F";
-    this.weatherContainer = document.querySelector('.weather');
     this.weatherData = document.querySelector('.weather-data');
+    this.weatherImg = document.querySelector('.weather-img');
 
     Display.prototype.addButtonListeners = function (WEATHERCONTROLLER){
         this.searchButton.addEventListener('click', async()=>{
@@ -36,7 +37,7 @@ let Display = function(){
         //create the humidity element
         let humidity = document.createElement('div');
         humidity.setAttribute('class', 'humidity');
-        humidity.textContent=weather.humidity;
+        humidity.textContent="Humidity: "+weather.humidity;
 
         //create the forecast element
         let forecast = document.createElement('div');
@@ -44,11 +45,11 @@ let Display = function(){
             //create the weather div
             let weatherDiv = document.createElement('div');
             weatherDiv.setAttribute('class', 'weather-div');
-            weatherDiv.textContent=weather.forecast.weather;
+            weatherDiv.textContent="Weather: "+weather.forecast.weather;
             //create the description div
             let description = document.createElement('div');
             description.setAttribute('class', 'description');
-            description.textContent=weather.forecast.description;
+            description.textContent="Weather Description: "+weather.forecast.description;
             
             //append the forecast elements
             forecast.appendChild(weatherDiv);
@@ -63,22 +64,22 @@ let Display = function(){
                 //create the latitude div
                 let latitude = document.createElement('div');
                 latitude.setAttribute('class', 'latitude');
-                latitude.textContent=weather.location.coord.latitude+"° Latitude";
+                latitude.textContent="Latitude: "+weather.location.coord.latitude+"°";
                 //create the longitude div
                 let longitude = document.createElement('div');
                 longitude.setAttribute('class', 'longitude');
-                longitude.textContent=weather.location.coord.longitude+"° Longitude";
+                longitude.textContent="Longitude: "+weather.location.coord.longitude+"°";
                 //append the coord elements
                 coord.appendChild(latitude);
                 coord.appendChild(longitude);
             //create the country div
             let country = document.createElement('div');
             country.setAttribute('class', 'country');
-            country.textContent=weather.location.country;
+            country.textContent="Country: "+weather.location.country;
             //create the name div
             let name = document.createElement('div');
             name.setAttribute('class', 'name');
-            name.textContent=weather.location.name;
+            name.textContent="City: "+weather.location.name;
             //append location elements
             location.appendChild(coord);
             location.appendChild(country);
@@ -130,16 +131,18 @@ let Display = function(){
         this.weatherData.appendChild(windSpeed);
 
         //set background according to weather
-        console.log(weather.forecast.weather);
         switch (weather.forecast.weather){
             case 'Clouds':
-                this.weatherContainer.style.backgroundImage="url("+cloudsImg+")";
+                this.weatherImg.setAttribute('src', cloudsImg);    
                 break;
             case 'Sunny':
-                this.weatherContainer.style.backgroundImage="url("+sunnyImg+")";
+                this.weatherImg.setAttribute('src', sunnyImg);
                 break;
             case 'Rain':
-                this.weatherContainer.style.backgroundImage="url("+rainImg+")";
+                this.weatherImg.setAttribute('src', rainImg);
+                break;
+            case 'Haze':
+                this.weatherImg.setAttribute('src', hazeImg);
                 break;
         };
     };

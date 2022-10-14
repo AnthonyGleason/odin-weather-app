@@ -90,6 +90,7 @@ let Weather = function(){
         this.humidity=response.main.humidity;
         //forecast
         this.forecast.weather=response.weather[0].main;
+        console.log(response.weather[0].description);
         this.forecast.description=response.weather[0].description;
         //location
         this.location.coord.latitude=response.coord.lat;
