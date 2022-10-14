@@ -1,7 +1,7 @@
 let Api = function (){
     this.response = undefined;
     //The search input goes in the middle of the two array elements
-    this.request = ["api.openweathermap.org/data/2.5/weather?q=","&APPID="];
+    this.request = ["api.openweathermap.org/data/2.5/weather?q=","&APPID=340442d64a4bbc16adbbe8497363d2fa"];
     this.searchInput = "London";
 
     //get data from api
@@ -40,23 +40,27 @@ let Temp = function(){
     this.k = undefined;
     this.c = undefined;
     this.f = undefined;
-    this.todaysHigh = undefined;
-    this.feelsLike = undefined;
-    this.unitType = "F";
-    
+    this.todaysHighF = undefined;
+    this.todaysHighC = undefined;
+    this.feelsLikeF = undefined;
+    this.feelsLikeC = undefined;
+
     //converts temperature from kelvin to C
-    Temp.prototype.convertTempC = function (){
-        this.c = this.k-273.15;
+    Temp.prototype.convertTempC = function (tempKelvin){
+        return tempKelvin-273.15;
     };
 
     //converts temperature from kelvin to F
-    Temp.prototype.convertTempF = function (){
-        this.f = (this.k - 273.15) * (9/5) + 32;
+    Temp.prototype.convertTempF = function (tempKelvin){
+        return (tempKelvin - 273.15) * (9/5) + 32;
     };
-
-    //toggles temperature units between F and C
-    Temp.prototype.toggleUnits = function (){
-        this.tempUnitType==="F" ? this.tempUnitType="C" : this.tempUnitType="F";
+    Temp.prototype.trimTemps = function (){
+        this.c=(this.c.split("."))[0];
+        this.f=(this.f.split("."))[0];
+        this.todaysHighC=(this.todaysHighC.split("."))[0];
+        this.todaysHighF=(this.todaysHighF.split("."))[0];
+        this.feelsLikeC=(this.feelsLikeC.split("."))[0];
+        this.feelsLikeF=(this.feelsLikeF.split("."))[0];
     };
 };
 /* when the default weather object is first initalized
@@ -94,10 +98,14 @@ let Weather = function(){
         this.location.name=response.name;
         //temp
         this.temp.k=response.main.temp;
-        this.temp.convertTempC();
-        this.temp.convertTempF();
-        this.temp.feelsLike=response.main.feels_like;
-        this.temp.todaysHigh=response.main.temp_max;
+        this.temp.c=String(this.temp.convertTempC(this.temp.k));
+        this.temp.f=String(this.temp.convertTempF(this.temp.k));
+        this.temp.feelsLikeC=String(this.temp.convertTempC(response.main.feels_like));
+        this.temp.feelsLikeF=String(this.temp.convertTempF(response.main.feels_like));
+        this.temp.todaysHighC=String(this.temp.convertTempC(response.main.temp_max));
+        this.temp.todaysHighF=String(this.temp.convertTempF((response.main.temp_max)));
+        //trim the temperatures to the left of the decimal place
+        this.temp.trimTemps();
         //windspeed
         this.windSpeed=response.wind.speed;
     };
