@@ -7,5 +7,18 @@
 body{
     height: 100vh;
     width: 100vw;
-    background-color: aliceblue;
+    background-image: url(../assets/wood.svg);
+    background-size:contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.weather{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    border-radius: 15px;
+    height: 500px;
+    width: 500px;
 }

@@ -1,7 +1,12 @@
+import rainImg from "../assets/rain.jpg";
+import cloudsImg from "../assets/clouds.jpg";
+import sunnyImg from "../assets/sunny.jpg";
+
 let Display = function(){
     this.searchButton = document.querySelector('.search-button');
     this.toggleTempButton = document.querySelector('.toggle-temp-button');
     this.tempUnitType = "F";
+    this.weatherContainer = document.querySelector('.weather');
     this.weatherData = document.querySelector('.weather-data');
 
     Display.prototype.addButtonListeners = function (WEATHERCONTROLLER){
@@ -38,7 +43,7 @@ let Display = function(){
         forecast.setAttribute('class', 'forecast');
             //create the weather div
             let weatherDiv = document.createElement('div');
-            weatherDiv.setAttribute('class', 'weather');
+            weatherDiv.setAttribute('class', 'weather-div');
             weatherDiv.textContent=weather.forecast.weather;
             //create the description div
             let description = document.createElement('div');
@@ -85,17 +90,17 @@ let Display = function(){
             let tempUnit = document.createElement('div');
             tempUnit.setAttribute('class', 'tempUnit');
             //set the temperature to f or c
-            this.tempUnitType==='F' ? tempUnit.textContent=weather.temp.f+"°F" : tempUnit.textContent=weather.temp.c+"°C";
+            this.tempUnitType==='F' ? tempUnit.textContent="Current Temperature: "+ weather.temp.f+"°F" : tempUnit.textContent="Current Temperature: "+ weather.temp.c+"°C";
             //create the today's high temp div
             let todaysHigh = document.createElement('div');
             todaysHigh.setAttribute('class', 'todays-high');
             //set the temperature to f or c
-            this.tempUnitType==='F' ? todaysHigh.textContent=weather.temp.todaysHighF+"°F" : todaysHigh.textContent=weather.temp.todaysHighC+"°C";
+            this.tempUnitType==='F' ? todaysHigh.textContent="Today's High: "+ weather.temp.todaysHighF+"°F" : todaysHigh.textContent="Today's High: "+ weather.temp.todaysHighC+"°C";
             //create the feels like temp div
             let feelsLike = document.createElement('div');
             feelsLike.setAttribute('class', 'feels like');
             //set the temperature to f or c
-            this.tempUnitType==='F' ? feelsLike.textContent=weather.temp.feelsLikeF+"°F" : feelsLike.textContent=weather.temp.feelsLikeC+"°C";
+            this.tempUnitType==='F' ? feelsLike.textContent="Feels Like: "+ weather.temp.feelsLikeF+"°F" : feelsLike.textContent="Feels Like: "+ weather.temp.feelsLikeC+"°C";
             //create the toggle temp button
             let toggleTempButton = document.createElement('button');
             toggleTempButton.setAttribute('class', 'toggle-temp-button');
@@ -123,6 +128,20 @@ let Display = function(){
         this.weatherData.appendChild(location);
         this.weatherData.appendChild(temp);
         this.weatherData.appendChild(windSpeed);
+
+        //set background according to weather
+        console.log(weather.forecast.weather);
+        switch (weather.forecast.weather){
+            case 'Clouds':
+                this.weatherContainer.style.backgroundImage="url("+cloudsImg+")";
+                break;
+            case 'Sunny':
+                this.weatherContainer.style.backgroundImage="url("+sunnyImg+")";
+                break;
+            case 'Rain':
+                this.weatherContainer.style.backgroundImage="url("+rainImg+")";
+                break;
+        };
     };
 
     //toggles temperature units between F and C
