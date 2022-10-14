@@ -2,9 +2,12 @@ import rainImg from "../assets/rain.jpg";
 import cloudsImg from "../assets/clouds.jpg";
 import sunnyImg from "../assets/sunny.jpg";
 import hazeImg from "../assets/haze.jpg";
+import clearImg from "../assets/clearsky.jpg";
+import loadingImg from "../assets/loading.gif";
 
 let Display = function(){
     this.searchButton = document.querySelector('.search-button');
+    this.loading = document.querySelector('.loading');
     this.toggleTempButton = document.querySelector('.toggle-temp-button');
     this.tempUnitType = "F";
     this.weatherData = document.querySelector('.weather-data');
@@ -12,12 +15,17 @@ let Display = function(){
 
     Display.prototype.addButtonListeners = function (WEATHERCONTROLLER){
         this.searchButton.addEventListener('click', async()=>{
+            //add loading gif
+            this.loading.setAttribute('src', loadingImg);
             //set city according to search input
             WEATHERCONTROLLER.api.searchInput=weatherSearch.value;
         
             //get current weather data for city
             await WEATHERCONTROLLER.populateWeatherData(weatherSearch);
-        
+            
+            //remove loading gif
+            this.loading.setAttribute('src', '');
+
             //display retrieved data
             this.displayWeatherData(WEATHERCONTROLLER);
 
@@ -143,6 +151,9 @@ let Display = function(){
                 break;
             case 'Haze':
                 this.weatherImg.setAttribute('src', hazeImg);
+                break;
+            case 'Clear':
+                this.weatherImg.setAttribute('src', clearImg);
                 break;
         };
     };

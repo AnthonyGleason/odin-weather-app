@@ -15,6 +15,9 @@ body{
     "img form"
     "data form";
 }
+.loading{
+    height: 50px;
+}
 .search-form,
 .weather-data,
 .weather-img{
@@ -33,6 +36,7 @@ body{
 .weather-data{
     grid-area: data;
     padding: 50px;
+
 }
 .weather-img{
     width: 100%;
